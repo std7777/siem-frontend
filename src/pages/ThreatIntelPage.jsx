@@ -6,6 +6,7 @@ const IOCS = [
   { type: "Domain", val: "evil-corp.ru", threat: "Phishing Host", conf: 94 },
   { type: "Hash", val: "a1b2c3d4e5f6...", threat: "WannaCry Variant", conf: 99 },
   { type: "URL", val: "/wp-admin/load.php", threat: "Webshell Path", conf: 72 },
+  { type: "Domain", val: "update-secure.net", threat: "Malware C2", conf: 88 },
   { type: "Hash", val: "deadbeef1234...", threat: "Ransomware Payload", conf: 95 },
 ];
 
@@ -19,7 +20,7 @@ const MITRE = [
 ];
 
 const FEEDS = [
-  { name: "AlienVault OTX", status: "active", last: "22 min ago", count: 12453 },
+  { name: "AlienVault OTX", status: "active", last: "2 min ago", count: 12453 },
   { name: "Abuse.ch", status: "active", last: "1 hr ago", count: 5432 },
   { name: "Shodan Monitor", status: "error", last: "3 hr ago", count: 0 },
   { name: "VirusTotal Feed", status: "active", last: "5 min ago", count: 3210 },
@@ -73,15 +74,19 @@ function ThreatIntelPage() {
                   <td style={{ fontFamily: "var(--font-mono)", color: "var(--text1)" }}>{ioc.val}</td>
                   <td style={{ color: "var(--text2)" }}>{ioc.threat}</td>
                   <td>
-                    <span
-                      style={{
-                        fontSize: 11,
-                        fontWeight: 700,
-                        color: ioc.conf > 90 ? "#ef4444" : ioc.conf > 75 ? "#f97316" : "#eab308",
-                      }}
-                    >
-                      {ioc.conf}%
-                    </span>
+                    <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                      <div style={{ width: 60, background: "var(--bg3)", height: 5, borderRadius: 3 }}>
+                        <div
+                          style={{
+                            width: `${ioc.conf}%`,
+                            height: "100%",
+                            background: ioc.conf > 90 ? "#ef4444" : ioc.conf > 75 ? "#f97316" : "#eab308",
+                            borderRadius: 3,
+                          }}
+                        />
+                      </div>
+                      <span style={{ fontSize: 10, color: "var(--text3)" }}>{ioc.conf}%</span>
+                    </div>
                   </td>
                 </tr>
               ))}
@@ -128,7 +133,8 @@ function ThreatIntelPage() {
         </div>
       )}
 
-      <div className="card" style={{ marginTop: 16, padding: 0 }}>
+      <div className="card" style={{ marginTop: 16 }}>
+        <div className="card-title">Report History</div>
         <table className="alert-table">
           <thead>
             <tr>
@@ -145,9 +151,7 @@ function ThreatIntelPage() {
                 <td style={{ color: "var(--text1)", fontWeight: 600 }}>{report.title}</td>
                 <td style={{ color: "var(--text3)" }}>{report.date}</td>
                 <td>
-                  <span style={{ background: "var(--bg3)", color: "var(--accent2)", padding: "1px 6px", borderRadius: 4, fontSize: 10 }}>
-                    {report.type}
-                  </span>
+                  <span className="report-type-pill">{report.type}</span>
                 </td>
                 <td style={{ color: "var(--text3)" }}>{report.size}</td>
                 <td>

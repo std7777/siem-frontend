@@ -1,6 +1,6 @@
 import React from "react";
 import { SEVERITIES, SEV_COLOR } from "../data/constants";
-import { SeverityBadge, MiniBar, DonutChart } from "../components/Charts";
+import { SeverityBadge, DonutChart } from "../components/Charts";
 import { categoryKey } from "../data/utils";
 
 function Dashboard({ alerts, rules, dispatch, push }) {
@@ -85,6 +85,36 @@ function Dashboard({ alerts, rules, dispatch, push }) {
     </div>
   );
 
+  const maxCategoryCount = Math.max(...catCounts.map((item) => item.val), 1);
+
+  const CategoryBar = ({ label, count, color }) => (
+    <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
+      <span
+        style={{
+          color,
+          fontSize: 11,
+          width: 120,
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+        }}
+      >
+        {label}
+      </span>
+      <div style={{ flex: 1, background: "var(--bg3)", height: 6, borderRadius: 3 }}>
+        <div
+          style={{
+            width: `${Math.max(8, Math.round((count / maxCategoryCount) * 100))}%`,
+            height: "100%",
+            background: color,
+            borderRadius: 3,
+          }}
+        />
+      </div>
+      <span style={{ fontSize: 11, color: "var(--text3)" }}>{count}</span>
+    </div>
+  );
+
   return (
     <div>
       <div className="page-title">Dashboard</div>
@@ -134,7 +164,14 @@ function Dashboard({ alerts, rules, dispatch, push }) {
       <div className="grid-3">
         <div className="card">
           <div className="card-title">Top Categories</div>
-          <MiniBar data={catCounts} colors={["#7c3aed", "#3b82f6", "#f97316", "#22c55e", "#eab308"]} />
+          {catCounts.map((item, index) => (
+            <CategoryBar
+              key={item.label}
+              label={item.label}
+              count={item.val}
+              color={["#7c3aed", "#3b82f6", "#f97316", "#22c55e", "#eab308"][index % 5]}
+            />
+          ))}
           {catCounts.length === 0 && <div style={{ color: "var(--text3)", fontSize: 11, marginTop: 10 }}>No data yet</div>}
         </div>
 
