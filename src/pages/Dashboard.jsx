@@ -1,44 +1,62 @@
 import React from "react";
 import { SEVERITIES, SEV_COLOR } from "../data/constants";
 import { SeverityBadge, MiniBar, DonutChart } from "../components/Charts";
+import { categoryKey } from "../data/utils";
 
 function Dashboard({ alerts, rules, dispatch, push }) {
-  const crit = alerts.filter((a) => a.severity === "CRITICAL").length;
-  const unacked = alerts.filter((a) => !a.acked).length;
+  const crit = alerts.filter((alert) => alert.severity === "CRITICAL").length;
+  const unacked = alerts.filter((alert) => !alert.acked).length;
   const recent = alerts.slice(0, 6);
-  const activeRules = (rules || []).filter((r) => r.on).length;
+  const activeRules = (rules || []).filter((rule) => rule.on).length;
 
-  const sevData = SEVERITIES.map((s) => ({
-    label: s.slice(0, 4),
-    val: alerts.filter((a) => a.severity === s).length,
-    color: SEV_COLOR[s],
+  const sevData = SEVERITIES.map((severity) => ({
+    label: severity.slice(0, 4),
+    val: alerts.filter((alert) => alert.severity === severity).length,
+    color: SEV_COLOR[severity],
   }));
 
-  const categoriesByCount = Object.entries(
-    alerts.reduce((acc, a) => {
-      acc[a.category] = (acc[a.category] || 0) + 1;
+  const ruleBackedCategories = Object.values(
+    (rules || [])
+      .filter((rule) => rule.on)
+      .reduce((acc, rule) => {
+        const key = categoryKey(rule.cat);
+        if (!acc[key]) {
+          acc[key] = { category: rule.cat, count: 0 };
+        }
+        acc[key].count += rule.hits || 0;
+        return acc;
+      }, {})
+  )
+    .sort((left, right) => right.count - left.count)
+    .slice(0, 5);
+
+  const fallbackAlertCategories = Object.entries(
+    alerts.reduce((acc, alert) => {
+      acc[alert.category] = (acc[alert.category] || 0) + 1;
       return acc;
     }, {})
   )
-    .sort((a, b) => b[1] - a[1])
+    .sort((left, right) => right[1] - left[1])
     .slice(0, 5)
     .map(([category, count]) => ({ category, count }));
 
-  const catCounts = categoriesByCount.map((c) => ({
-    label: c.category.length > 10 ? `${c.category.slice(0, 9)}…` : c.category,
-    val: c.count,
+  const categoriesByCount = ruleBackedCategories.length > 0 ? ruleBackedCategories : fallbackAlertCategories;
+
+  const catCounts = categoriesByCount.map((item) => ({
+    label: item.category.length > 10 ? `${item.category.slice(0, 9)}...` : item.category,
+    val: item.count,
   }));
 
   const topIps = (key, limit = 6) => {
-    const counts = alerts.reduce((acc, a) => {
-      const ip = a[key];
+    const counts = alerts.reduce((acc, alert) => {
+      const ip = alert[key];
       if (!ip) return acc;
       acc[ip] = (acc[ip] || 0) + 1;
       return acc;
     }, {});
 
     return Object.entries(counts)
-      .sort((a, b) => b[1] - a[1])
+      .sort((left, right) => right[1] - left[1])
       .slice(0, limit)
       .map(([ip, count]) => ({ ip, count }));
   };
@@ -59,17 +77,18 @@ function Dashboard({ alerts, rules, dispatch, push }) {
   return (
     <div>
       <div className="page-title">Dashboard</div>
+
       <div className="grid-4">
         <div className="stat">
           <div className="stat-label">By Severity</div>
           <div className="donut-wrap" style={{ gap: 14 }}>
             <DonutChart data={sevData} size={92} />
             <div className="donut-legend" style={{ gap: 6 }}>
-              {sevData.slice(0, 4).map((d) => (
-                <div key={d.label} className="legend-item" style={{ fontSize: 10 }}>
-                  <div className="legend-dot" style={{ background: d.color }} />
-                  <span style={{ color: "var(--text2)" }}>{d.label}</span>
-                  <span style={{ marginLeft: "auto", color: "var(--text1)", fontWeight: 600 }}>{d.val}</span>
+              {sevData.slice(0, 4).map((item) => (
+                <div key={item.label} className="legend-item" style={{ fontSize: 10 }}>
+                  <div className="legend-dot" style={{ background: item.color }} />
+                  <span style={{ color: "var(--text2)" }}>{item.label}</span>
+                  <span style={{ marginLeft: "auto", color: "var(--text1)", fontWeight: 600 }}>{item.val}</span>
                 </div>
               ))}
             </div>
@@ -105,23 +124,21 @@ function Dashboard({ alerts, rules, dispatch, push }) {
         <div className="card">
           <div className="card-title">Top Categories</div>
           <MiniBar data={catCounts} colors={["#7c3aed", "#3b82f6", "#f97316", "#22c55e", "#eab308"]} />
-          {catCounts.length === 0 && (
-            <div style={{ color: "var(--text3)", fontSize: 11, marginTop: 10 }}>No data yet</div>
-          )}
+          {catCounts.length === 0 && <div style={{ color: "var(--text3)", fontSize: 11, marginTop: 10 }}>No data yet</div>}
         </div>
 
         <div className="card">
           <div className="card-title">Top Source IPs</div>
-          {topSrc.map((x) => (
-            <IpBar key={x.ip} ip={x.ip} count={x.count} color="#ef4444" />
+          {topSrc.map((item) => (
+            <IpBar key={item.ip} ip={item.ip} count={item.count} color="#ef4444" />
           ))}
           {topSrc.length === 0 && <div style={{ color: "var(--text3)", fontSize: 11 }}>No data yet</div>}
         </div>
 
         <div className="card">
           <div className="card-title">Top Destination IPs</div>
-          {topDst.map((x) => (
-            <IpBar key={x.ip} ip={x.ip} count={x.count} color="#3b82f6" />
+          {topDst.map((item) => (
+            <IpBar key={item.ip} ip={item.ip} count={item.count} color="#3b82f6" />
           ))}
           {topDst.length === 0 && <div style={{ color: "var(--text3)", fontSize: 11 }}>No data yet</div>}
         </div>
@@ -132,22 +149,22 @@ function Dashboard({ alerts, rules, dispatch, push }) {
         <div style={{ maxHeight: 200, overflowY: "auto" }}>
           {recent.length === 0 && (
             <div style={{ color: "var(--text3)", fontSize: 12, padding: "20px 0", textAlign: "center" }}>
-              No events yet — simulate an attack below
+              No events yet.
             </div>
           )}
-          {recent.map((a) => (
-            <div key={a.id} className="feed-item">
-              <div className="feed-dot" style={{ background: SEV_COLOR[a.severity] }} />
+          {recent.map((alert) => (
+            <div key={alert.id} className="feed-item">
+              <div className="feed-dot" style={{ background: SEV_COLOR[alert.severity] }} />
               <div style={{ flex: 1 }}>
-                <span style={{ color: "var(--text3)", fontSize: 10, marginRight: 8 }}>{a.time}</span>
-                <SeverityBadge severity={a.severity} />
-                <span style={{ marginLeft: 8, color: "var(--text1)" }}>{a.message}</span>
+                <span style={{ color: "var(--text3)", fontSize: 10, marginRight: 8 }}>{alert.time}</span>
+                <SeverityBadge severity={alert.severity} />
+                <span style={{ marginLeft: 8, color: "var(--text1)" }}>{alert.message}</span>
               </div>
               <button
                 className="btn"
                 style={{ fontSize: 10, padding: "2px 8px" }}
                 onClick={() => {
-                  dispatch({ type: "ACK", id: a.id });
+                  dispatch({ type: "ACK", id: alert.id });
                   push("Event acknowledged");
                 }}
               >

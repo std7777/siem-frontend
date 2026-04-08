@@ -13,6 +13,8 @@ import Dashboard      from "./pages/Dashboard";
 import AlertsPage     from "./pages/AlertsPage";
 import RulesPage      from "./pages/RulesPage";
 import ThreatIntelPage from "./pages/ThreatIntelPage";
+import SimulatorPage  from "./pages/SimulatorPage";
+import ReportsPage    from "./pages/ReportsPage";
 
 import "./styles/index.css";
 
@@ -56,6 +58,8 @@ function App() {
       case "alerts":     return <AlertsPage     alerts={visibleAlerts} dispatch={dispatch} push={push} />;
       case "rules":      return <RulesPage      push={push} />;
       case "intel":      return <ThreatIntelPage />;
+      case "simulator":  return <SimulatorPage  dispatch={dispatch} push={push} />;
+      case "reports":    return <ReportsPage />;
       default:           return <Dashboard      alerts={visibleAlerts} rules={rules} dispatch={dispatch} push={push} />;
     }
   };
