@@ -7,7 +7,6 @@ function Topbar({ page, setPage, critCount, push }) {
       <div className="topbar-left">
         <div className="topbar-brand" onClick={() => setPage("dashboard")}>
           <div className="brand">SIEM</div>
-          <div className="sub">Security Operations</div>
         </div>
 
         <div className="topnav">

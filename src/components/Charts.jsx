@@ -19,18 +19,22 @@ export function MiniBar({ data, colors }) {
   const max = Math.max(...data.map((item) => item.val), 1);
 
   return (
-    <div className="bar-chart">
+    <div className="mini-bar-list">
       {data.map((item, index) => (
-        <div key={index} className="bar-wrap">
-          <div
-            className="bar"
-            style={{
-              height: `${Math.round((item.val / max) * 100)}%`,
-              background: colors[index % colors.length],
-              minHeight: 3,
-            }}
-          />
-          <div className="bar-label">{item.label}</div>
+        <div key={index} className="mini-bar-row">
+          <div className="mini-bar-header">
+            <span className="mini-bar-label">{item.label}</span>
+            <span className="mini-bar-value">{item.val}</span>
+          </div>
+          <div className="mini-bar-track">
+            <div
+              className="mini-bar-fill"
+              style={{
+                width: `${Math.max(8, Math.round((item.val / max) * 100))}%`,
+                background: colors[index % colors.length],
+              }}
+            />
+          </div>
         </div>
       ))}
     </div>

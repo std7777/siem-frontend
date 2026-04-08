@@ -15,35 +15,46 @@ function Dashboard({ alerts, rules, dispatch, push }) {
     color: SEV_COLOR[severity],
   }));
 
-  const ruleBackedCategories = Object.values(
+  const alertCategories = Object.values(
+    alerts.reduce((acc, alert) => {
+      const key = categoryKey(alert.category);
+      if (!key) {
+        return acc;
+      }
+
+      if (!acc[key]) {
+        acc[key] = { category: alert.category, count: 0 };
+      }
+
+      acc[key].count += Number(alert.count) > 0 ? Number(alert.count) : 1;
+      return acc;
+    }, {})
+  );
+
+  const ruleCategories = Object.values(
     (rules || [])
       .filter((rule) => rule.on)
       .reduce((acc, rule) => {
         const key = categoryKey(rule.cat);
+        if (!key) {
+          return acc;
+        }
+
         if (!acc[key]) {
           acc[key] = { category: rule.cat, count: 0 };
         }
-        acc[key].count += rule.hits || 0;
+
+        acc[key].count += Number(rule.hits) || 0;
         return acc;
       }, {})
-  )
+  );
+
+  const categoriesByCount = (alertCategories.length > 0 ? alertCategories : ruleCategories)
     .sort((left, right) => right.count - left.count)
     .slice(0, 5);
 
-  const fallbackAlertCategories = Object.entries(
-    alerts.reduce((acc, alert) => {
-      acc[alert.category] = (acc[alert.category] || 0) + 1;
-      return acc;
-    }, {})
-  )
-    .sort((left, right) => right[1] - left[1])
-    .slice(0, 5)
-    .map(([category, count]) => ({ category, count }));
-
-  const categoriesByCount = ruleBackedCategories.length > 0 ? ruleBackedCategories : fallbackAlertCategories;
-
   const catCounts = categoriesByCount.map((item) => ({
-    label: item.category.length > 10 ? `${item.category.slice(0, 9)}...` : item.category,
+    label: item.category,
     val: item.count,
   }));
 

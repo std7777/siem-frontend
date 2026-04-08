@@ -18,16 +18,13 @@
 }
 
 .topbar-brand {
-  cursor: pointer;
-  user-select: none;
   display: flex;
   flex-direction: column;
-  gap: 2px;
 }
 
 .topbar-brand .brand {
   font-family: var(--font-head);
-  font-size: 25px;
+  font-size: 30px;
   font-weight: 800;
   color: var(--accent2);
   letter-spacing: -0.5px;
