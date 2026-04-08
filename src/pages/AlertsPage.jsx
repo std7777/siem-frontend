@@ -1,57 +1,67 @@
 import React, { useState } from "react";
-import { SEVERITIES, CATEGORIES, SEV_COLOR } from "../data/constants";
+import { SEVERITIES, CATEGORIES } from "../data/constants";
 import { SeverityBadge } from "../components/Charts";
 
 function AlertsPage({ alerts, dispatch, push }) {
-  const [search,    setSearch]    = useState("");
+  const [search, setSearch] = useState("");
   const [sevFilter, setSevFilter] = useState("ALL");
   const [catFilter, setCatFilter] = useState("ALL");
-  const [selected,  setSelected]  = useState(null);
+  const [selected, setSelected] = useState(null);
 
-  const filtered = alerts.filter(a => {
+  const filtered = alerts.filter((a) => {
     if (sevFilter !== "ALL" && a.severity !== sevFilter) return false;
     if (catFilter !== "ALL" && a.category !== catFilter) return false;
-    if (search && !(a.message + a.src + a.dst + a.rule + a.category)
-        .toLowerCase().includes(search.toLowerCase())) return false;
+    if (search && !(a.message + a.src + a.dst + a.rule + a.category).toLowerCase().includes(search.toLowerCase())) {
+      return false;
+    }
     return true;
   });
 
   return (
     <div>
-      {/* Filter Bar */}
+      <div className="page-title">Alerts</div>
       <div className="filter-bar">
-        <input
-          placeholder="🔍  Search events, IPs, rules…"
-          value={search}
-          onChange={e => setSearch(e.target.value)}
-        />
-        <select value={sevFilter} onChange={e => setSevFilter(e.target.value)}>
+        <input placeholder="Search events, IPs, rules..." value={search} onChange={(e) => setSearch(e.target.value)} />
+        <select value={sevFilter} onChange={(e) => setSevFilter(e.target.value)}>
           <option value="ALL">All Severities</option>
-          {SEVERITIES.map(s => <option key={s} value={s}>{s}</option>)}
+          {SEVERITIES.map((s) => (
+            <option key={s} value={s}>
+              {s}
+            </option>
+          ))}
         </select>
-        <select value={catFilter} onChange={e => setCatFilter(e.target.value)}>
+        <select value={catFilter} onChange={(e) => setCatFilter(e.target.value)}>
           <option value="ALL">All Categories</option>
-          {CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
+          {CATEGORIES.map((c) => (
+            <option key={c} value={c}>
+              {c}
+            </option>
+          ))}
         </select>
         <button
           className="btn danger"
-          onClick={() => { dispatch({ type: "CLEAR" }); push("All events cleared", "🗑️"); }}
+          onClick={() => {
+            dispatch({ type: "CLEAR" });
+            push("All events cleared");
+          }}
         >
           Clear All
         </button>
-        <span style={{ color: "var(--text3)", fontSize: 11, marginLeft: "auto" }}>
-          {filtered.length} events
-        </span>
+        <span style={{ color: "var(--text3)", fontSize: 11, marginLeft: "auto" }}>{filtered.length} events</span>
       </div>
 
-      {/* Table */}
       <div className="card" style={{ padding: 0 }}>
         <div style={{ overflowX: "auto" }}>
           <table className="alert-table">
             <thead>
               <tr>
-                <th>Time</th><th>Severity</th><th>Category</th>
-                <th>Source IP</th><th>Destination</th><th>Rule / Message</th><th>Actions</th>
+                <th>Time</th>
+                <th>Severity</th>
+                <th>Category</th>
+                <th>Source IP</th>
+                <th>Destination</th>
+                <th>Rule</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -62,29 +72,37 @@ function AlertsPage({ alerts, dispatch, push }) {
                   </td>
                 </tr>
               )}
-              {filtered.slice(0, 100).map(a => (
+              {filtered.slice(0, 100).map((a) => (
                 <tr key={a.id} className={a.acked ? "acked" : ""} onClick={() => setSelected(a)}>
                   <td style={{ color: "var(--text3)" }}>{a.time}</td>
-                  <td><SeverityBadge severity={a.severity} /></td>
+                  <td>
+                    <SeverityBadge severity={a.severity} />
+                  </td>
                   <td style={{ color: "var(--text2)" }}>{a.category}</td>
                   <td style={{ fontFamily: "var(--font-mono)", color: "var(--red)" }}>{a.src}</td>
                   <td style={{ fontFamily: "var(--font-mono)" }}>{a.dst}</td>
                   <td style={{ color: "var(--text1)" }}>{a.rule}</td>
-                  <td onClick={e => e.stopPropagation()}>
-                    <div style={{ display: "flex", gap: 4 }}>
+                  <td onClick={(e) => e.stopPropagation()}>
+                    <div style={{ display: "flex", gap: 6 }}>
                       <button
                         className="btn"
                         style={{ fontSize: 10, padding: "2px 8px" }}
-                        onClick={() => { dispatch({ type: "ACK", id: a.id }); push("ACK'd", "✅"); }}
+                        onClick={() => {
+                          dispatch({ type: "ACK", id: a.id });
+                          push("Event acknowledged");
+                        }}
                       >
                         ACK
                       </button>
                       <button
                         className="btn danger"
                         style={{ fontSize: 10, padding: "2px 8px" }}
-                        onClick={() => { dispatch({ type: "DELETE", id: a.id }); push("Event dismissed", "🗑️"); }}
+                        onClick={() => {
+                          dispatch({ type: "DELETE", id: a.id });
+                          push("Event dismissed");
+                        }}
                       >
-                        ✕
+                        Dismiss
                       </button>
                     </div>
                   </td>
@@ -95,26 +113,27 @@ function AlertsPage({ alerts, dispatch, push }) {
         </div>
       </div>
 
-      {/* Detail Modal */}
       {selected && (
         <div className="modal-overlay" onClick={() => setSelected(null)}>
-          <div className="modal" onClick={e => e.stopPropagation()}>
+          <div className="modal" onClick={(e) => e.stopPropagation()}>
             <div className="modal-title">
               <span>Event Detail</span>
-              <button className="modal-close" onClick={() => setSelected(null)}>×</button>
+              <button className="modal-close" onClick={() => setSelected(null)}>
+                ×
+              </button>
             </div>
             <SeverityBadge severity={selected.severity} />
             {[
-              ["Rule",          selected.rule],
-              ["Category",      selected.category],
-              ["Time",          selected.time],
-              ["Source IP",     selected.src],
-              ["Destination",   selected.dst],
-              ["Hostname",      selected.hostname],
-              ["User",          selected.user],
-              ["PID",           selected.pid],
-              ["Hit Count",     selected.count],
-              ["Acknowledged",  selected.acked ? "Yes" : "No"],
+              ["Rule", selected.rule],
+              ["Category", selected.category],
+              ["Time", selected.time],
+              ["Source IP", selected.src],
+              ["Destination", selected.dst],
+              ["Hostname", selected.hostname],
+              ["User", selected.user],
+              ["PID", selected.pid],
+              ["Hit Count", selected.count],
+              ["Acknowledged", selected.acked ? "Yes" : "No"],
             ].map(([k, v]) => (
               <div className="detail-row" key={k}>
                 <span className="detail-key">{k}</span>
@@ -126,13 +145,21 @@ function AlertsPage({ alerts, dispatch, push }) {
             <div style={{ marginTop: 16, display: "flex", gap: 8 }}>
               <button
                 className="btn primary"
-                onClick={() => { dispatch({ type: "ACK", id: selected.id }); setSelected(null); push("Acknowledged", "✅"); }}
+                onClick={() => {
+                  dispatch({ type: "ACK", id: selected.id });
+                  setSelected(null);
+                  push("Event acknowledged");
+                }}
               >
                 Acknowledge
               </button>
               <button
                 className="btn danger"
-                onClick={() => { dispatch({ type: "DELETE", id: selected.id }); setSelected(null); push("Event dismissed", "🗑️"); }}
+                onClick={() => {
+                  dispatch({ type: "DELETE", id: selected.id });
+                  setSelected(null);
+                  push("Event dismissed");
+                }}
               >
                 Dismiss
               </button>

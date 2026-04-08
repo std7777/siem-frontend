@@ -92,7 +92,7 @@ export function DonutChart({ data, size = 100 }) {
         textAnchor="middle"
         fill="var(--text1)"
         fontSize="11"
-        fontFamily="'Syne',sans-serif"
+        fontFamily="Space Grotesk, sans-serif"
         fontWeight="700"
       >
         {total}

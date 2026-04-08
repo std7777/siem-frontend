@@ -1,16 +1,15 @@
 import { useState, useCallback } from "react";
 import { uid } from "../data/utils";
 
-// ─── useToasts ────────────────────────────────────────────────────────────────
-// Manages temporary notification toasts shown in the bottom-right corner.
 export function useToasts() {
   const [toasts, setToasts] = useState([]);
 
-  const push = useCallback((msg, icon = "⚡") => {
+  const push = useCallback((msg) => {
     const id = uid();
-    setToasts(t => [...t, { id, msg, icon }]);
-    setTimeout(() => setToasts(t => t.filter(x => x.id !== id)), 3500);
+    setToasts((t) => [...t, { id, msg }]);
+    setTimeout(() => setToasts((t) => t.filter((x) => x.id !== id)), 3500);
   }, []);
 
   return { toasts, push };
 }
+

@@ -3,9 +3,8 @@ import React from "react";
 function ToastContainer({ toasts }) {
   return (
     <div className="toast-container">
-      {toasts.map(t => (
+      {toasts.map((t) => (
         <div className="toast" key={t.id}>
-          <span className="toast-icon">{t.icon}</span>
           <span>{t.msg}</span>
         </div>
       ))}
@@ -14,3 +13,4 @@ function ToastContainer({ toasts }) {
 }
 
 export default ToastContainer;
+
