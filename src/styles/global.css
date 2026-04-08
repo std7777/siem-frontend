@@ -1,0 +1,184 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Syne:wght@400;600;700;800&display=swap');
+
+/* ─── CSS Variables ────────────────────────────────────────────────────────── */
+:root {
+  --bg0: #0a0c10; --bg1: #0f1117; --bg2: #161923; --bg3: #1e2330;
+  --border: rgba(255,255,255,0.07); --border2: rgba(255,255,255,0.12);
+  --text1: #e8eaf0; --text2: #8b93a8; --text3: #4f5668;
+  --accent: #7c3aed; --accent2: #a78bfa;
+  --green: #22c55e; --red: #ef4444; --yellow: #eab308;
+  --blue: #3b82f6; --orange: #f97316;
+  --font-head: 'Syne', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --r: 8px; --r2: 12px;
+}
+
+/* ─── Light Mode ───────────────────────────────────────────────────────────── */
+.light {
+  --bg0: #f0f2f7; --bg1: #ffffff; --bg2: #f5f7fc; --bg3: #eaecf4;
+  --border: rgba(0,0,0,0.07); --border2: rgba(0,0,0,0.12);
+  --text1: #0f1117; --text2: #4f5668; --text3: #8b93a8;
+}
+
+/* ─── Reset & Base ─────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg0); color: var(--text1); font-family: var(--font-mono); font-size: 13px; }
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: var(--bg1); }
+::-webkit-scrollbar-thumb { background: var(--bg3); border-radius: 3px; }
+
+/* ─── Layout ───────────────────────────────────────────────────────────────── */
+.siem-root { display: flex; min-height: 100vh; background: var(--bg0); }
+
+/* ─── Sidebar ──────────────────────────────────────────────────────────────── */
+.sidebar { width: 220px; flex-shrink: 0; background: var(--bg1); border-right: 1px solid var(--border); display: flex; flex-direction: column; }
+.sidebar-logo { padding: 20px 16px 16px; border-bottom: 1px solid var(--border); }
+.sidebar-logo .brand { font-family: var(--font-head); font-size: 18px; font-weight: 800; color: var(--accent2); letter-spacing: -0.5px; }
+.sidebar-logo .sub { font-size: 10px; color: var(--text3); letter-spacing: 2px; text-transform: uppercase; margin-top: 2px; }
+.sidebar-nav { flex: 1; padding: 12px 8px; display: flex; flex-direction: column; gap: 2px; }
+.nav-item { display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: var(--r); cursor: pointer; color: var(--text2); font-size: 12px; font-family: var(--font-head); font-weight: 600; letter-spacing: 0.3px; transition: all 0.15s; border: none; background: none; width: 100%; text-align: left; }
+.nav-item:hover { background: var(--bg2); color: var(--text1); }
+.nav-item.active { background: rgba(124,58,237,0.15); color: var(--accent2); }
+.nav-item .icon { font-size: 15px; width: 18px; text-align: center; }
+.nav-badge { margin-left: auto; background: var(--red); color: #fff; font-size: 10px; font-family: var(--font-mono); padding: 1px 6px; border-radius: 10px; font-weight: 600; }
+
+/* ─── Main Area ────────────────────────────────────────────────────────────── */
+.main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+.topbar { background: var(--bg1); border-bottom: 1px solid var(--border); padding: 0 24px; height: 52px; display: flex; align-items: center; gap: 16px; flex-shrink: 0; }
+.topbar-title { font-family: var(--font-head); font-size: 16px; font-weight: 700; color: var(--text1); flex: 1; }
+.topbar-status { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text2); }
+.content { flex: 1; overflow-y: auto; padding: 20px 24px; }
+
+/* ─── Pulse animation ──────────────────────────────────────────────────────── */
+.pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.6;transform:scale(0.85)} }
+
+/* ─── Buttons ──────────────────────────────────────────────────────────────── */
+.btn { padding: 6px 14px; border-radius: var(--r); border: 1px solid var(--border2); background: var(--bg2); color: var(--text1); font-family: var(--font-mono); font-size: 11px; cursor: pointer; transition: all 0.15s; }
+.btn:hover { background: var(--bg3); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.btn.primary:hover { background: #6d28d9; }
+.btn.danger { background: rgba(239,68,68,0.1); border-color: rgba(239,68,68,0.3); color: var(--red); }
+
+/* ─── Cards ────────────────────────────────────────────────────────────────── */
+.card { background: var(--bg1); border: 1px solid var(--border); border-radius: var(--r2); padding: 16px 20px; }
+.card-title { font-family: var(--font-head); font-size: 12px; font-weight: 700; color: var(--text2); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+
+/* ─── Grid layouts ─────────────────────────────────────────────────────────── */
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+
+/* ─── Stat Cards ───────────────────────────────────────────────────────────── */
+.stat { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--r2); padding: 14px 18px; }
+.stat-label { font-size: 10px; color: var(--text3); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px; }
+.stat-val { font-family: var(--font-head); font-size: 26px; font-weight: 800; color: var(--text1); }
+.stat-sub { font-size: 10px; color: var(--text3); margin-top: 4px; }
+
+/* ─── Alert Table ──────────────────────────────────────────────────────────── */
+.alert-table { width: 100%; border-collapse: collapse; font-size: 11.5px; }
+.alert-table th { color: var(--text3); font-size: 10px; letter-spacing: 1px; text-transform: uppercase; padding: 8px 10px; text-align: left; border-bottom: 1px solid var(--border); font-weight: 600; }
+.alert-table td { padding: 7px 10px; border-bottom: 1px solid var(--border); vertical-align: middle; max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.alert-table tr:last-child td { border-bottom: none; }
+.alert-table tr:hover td { background: var(--bg2); cursor: pointer; }
+.alert-table tr.acked td { opacity: 0.45; }
+
+/* ─── Severity Badge ───────────────────────────────────────────────────────── */
+.sev { display: inline-block; padding: 2px 7px; border-radius: 4px; font-size: 10px; font-weight: 600; letter-spacing: 0.5px; }
+
+/* ─── Live Feed ────────────────────────────────────────────────────────────── */
+.feed-item { display: flex; gap: 10px; align-items: flex-start; padding: 8px 0; border-bottom: 1px solid var(--border); animation: fadeSlide 0.4s ease; }
+@keyframes fadeSlide { from{opacity:0;transform:translateY(-6px)} to{opacity:1;transform:none} }
+.feed-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 3px; }
+
+/* ─── Filter Bar ───────────────────────────────────────────────────────────── */
+.filter-bar { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; align-items: center; }
+.filter-bar input, .filter-bar select { background: var(--bg2); border: 1px solid var(--border); color: var(--text1); border-radius: var(--r); padding: 6px 10px; font-family: var(--font-mono); font-size: 11px; outline: none; }
+.filter-bar input { flex: 1; min-width: 180px; }
+.filter-bar input:focus, .filter-bar select:focus { border-color: var(--accent); }
+
+/* ─── Charts ───────────────────────────────────────────────────────────────── */
+.bar-chart { display: flex; align-items: flex-end; gap: 6px; height: 80px; }
+.bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.bar { border-radius: 3px 3px 0 0; width: 100%; transition: height 0.4s ease; }
+.bar-label { font-size: 9px; color: var(--text3); }
+.spark { display: flex; align-items: flex-end; gap: 2px; height: 30px; }
+.spark-bar { flex: 1; border-radius: 1px; background: var(--accent); opacity: 0.7; transition: height 0.3s; }
+
+/* ─── Donut Chart ──────────────────────────────────────────────────────────── */
+.donut-wrap { display: flex; gap: 20px; align-items: center; }
+.donut-legend { display: flex; flex-direction: column; gap: 8px; flex: 1; }
+.legend-item { display: flex; align-items: center; gap: 8px; font-size: 11px; }
+.legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+/* ─── Attack Simulator ─────────────────────────────────────────────────────── */
+.attack-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+.attack-btn { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--r2); padding: 14px; cursor: pointer; text-align: left; transition: all 0.2s; position: relative; overflow: hidden; }
+.attack-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.4); }
+.attack-btn.firing { animation: firing 0.6s ease; }
+@keyframes firing { 0%{transform:scale(1)} 30%{transform:scale(0.96)} 60%{transform:scale(1.02)} 100%{transform:scale(1)} }
+.attack-icon { font-size: 24px; margin-bottom: 8px; }
+.attack-name { font-family: var(--font-head); font-size: 13px; font-weight: 700; color: var(--text1); margin-bottom: 4px; }
+.attack-desc { font-size: 10px; color: var(--text3); line-height: 1.5; }
+.attack-flash { position: absolute; inset: 0; background: rgba(255,255,255,0.06); opacity: 0; border-radius: var(--r2); animation: flash 0.4s ease; }
+@keyframes flash { 0%{opacity:0} 30%{opacity:1} 100%{opacity:0} }
+
+/* ─── Timeline ─────────────────────────────────────────────────────────────── */
+.timeline { display: flex; flex-direction: column; gap: 0; }
+.tl-item { display: flex; gap: 12px; padding: 8px 0; position: relative; }
+.tl-line { position: absolute; left: 15px; top: 28px; bottom: -8px; width: 1px; background: var(--border); }
+.tl-dot { width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 10px; margin-top: 2px; border: 2px solid var(--bg1); }
+.tl-content { flex: 1; }
+.tl-title { font-size: 12px; color: var(--text1); font-weight: 600; }
+.tl-meta { font-size: 10px; color: var(--text3); margin-top: 2px; }
+
+/* ─── Tabs ─────────────────────────────────────────────────────────────────── */
+.tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border); margin-bottom: 16px; }
+.tab { padding: 8px 16px; font-family: var(--font-head); font-size: 12px; font-weight: 600; color: var(--text2); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; transition: all 0.15s; background: none; border-top: none; border-left: none; border-right: none; }
+.tab:hover { color: var(--text1); }
+.tab.active { color: var(--accent2); border-bottom-color: var(--accent2); }
+
+/* ─── Rule Cards ───────────────────────────────────────────────────────────── */
+.rule-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--r); padding: 12px 14px; margin-bottom: 8px; display: flex; align-items: center; gap: 12px; }
+.rule-toggle { width: 32px; height: 18px; border-radius: 9px; background: var(--bg3); position: relative; cursor: pointer; flex-shrink: 0; transition: background 0.2s; }
+.rule-toggle.on { background: var(--accent); }
+.rule-toggle::after { content:''; position: absolute; left: 2px; top: 2px; width: 14px; height: 14px; border-radius: 50%; background: #fff; transition: transform 0.2s; }
+.rule-toggle.on::after { transform: translateX(14px); }
+
+/* ─── Network Map ──────────────────────────────────────────────────────────── */
+.net-canvas { position: relative; width: 100%; height: 280px; overflow: hidden; border-radius: var(--r); background: var(--bg2); }
+.net-node { position: absolute; display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; }
+.net-circle { border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; border: 2px solid rgba(255,255,255,0.1); transition: all 0.3s; }
+.net-node:hover .net-circle { border-color: var(--accent2); transform: scale(1.1); }
+.net-label { font-size: 9px; color: var(--text3); white-space: nowrap; }
+
+/* ─── Modal ────────────────────────────────────────────────────────────────── */
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; z-index: 1000; }
+.modal { background: var(--bg1); border: 1px solid var(--border2); border-radius: var(--r2); padding: 24px; width: 560px; max-width: 90vw; max-height: 80vh; overflow-y: auto; }
+.modal-title { font-family: var(--font-head); font-size: 16px; font-weight: 700; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; }
+.modal-close { background: none; border: none; color: var(--text2); font-size: 20px; cursor: pointer; }
+.detail-row { display: flex; gap: 12px; margin-bottom: 10px; font-size: 12px; }
+.detail-key { color: var(--text3); width: 100px; flex-shrink: 0; }
+.detail-val { color: var(--text1); font-family: var(--font-mono); word-break: break-all; }
+.raw-box { background: var(--bg0); border: 1px solid var(--border); border-radius: var(--r); padding: 12px; font-family: var(--font-mono); font-size: 11px; color: var(--green); margin-top: 8px; word-break: break-all; }
+
+/* ─── Heatmap ──────────────────────────────────────────────────────────────── */
+.heatmap { display: grid; grid-template-columns: repeat(24, 1fr); gap: 3px; }
+.hm-cell { height: 16px; border-radius: 2px; }
+
+/* ─── Toast ────────────────────────────────────────────────────────────────── */
+.toast-container { position: fixed; bottom: 20px; right: 20px; display: flex; flex-direction: column; gap: 8px; z-index: 2000; }
+.toast { background: var(--bg1); border: 1px solid var(--border2); border-radius: var(--r); padding: 10px 16px; font-size: 12px; color: var(--text1); display: flex; gap: 10px; align-items: center; animation: slideIn 0.3s ease; box-shadow: 0 4px 20px rgba(0,0,0,0.4); min-width: 280px; }
+@keyframes slideIn { from{opacity:0;transform:translateX(20px)} to{opacity:1;transform:none} }
+.toast-icon { font-size: 16px; }
+
+/* ─── Responsive ───────────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .grid-3 { grid-template-columns: 1fr 1fr; }
+  .sidebar { width: 180px; }
+}
+@media (max-width: 640px) {
+  .sidebar { display: none; }
+  .grid-4, .grid-3, .grid-2 { grid-template-columns: 1fr; }
+}
