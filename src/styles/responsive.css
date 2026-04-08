@@ -50,4 +50,8 @@
   .report-metric-grid {
     grid-template-columns: 1fr;
   }
+
+  .alerts-toolbar .btn {
+    width: 100%;
+  }
 }

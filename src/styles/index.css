@@ -4,7 +4,6 @@
 @import "./components/navigation.css";
 @import "./components/ui.css";
 @import "./components/data-display.css";
-@import "./components/overlays.css";
 @import "./pages/alerts.css";
 @import "./pages/reports.css";
 @import "./responsive.css";
