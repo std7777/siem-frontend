@@ -1,0 +1,38 @@
+.alerts-toolbar {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.alerts-total-card {
+  background: linear-gradient(180deg, rgba(124, 58, 237, 0.18), rgba(124, 58, 237, 0.08));
+  border: 1px solid rgba(167, 139, 250, 0.22);
+  border-radius: var(--r2);
+  padding: 18px 20px;
+}
+
+.alerts-total-label {
+  color: var(--text3);
+  font-size: 11px;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.alerts-total-value {
+  font-family: var(--font-head);
+  font-size: 42px;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--text1);
+}
+
+.alerts-total-meta {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: var(--text2);
+  font-size: 11px;
+}

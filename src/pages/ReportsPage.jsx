@@ -1,6 +1,4 @@
 import React from "react";
-import { randInt } from "../data/utils";
-import { MiniBar } from "../components/Charts";
 
 const REPORTS = [
   { title: "Daily Threat Summary", date: "Today, 06:00", type: "Automated", size: "124 KB" },
@@ -17,57 +15,74 @@ const SLA_METRICS = [
   { label: "False Positive Rate", val: "8.4%", good: true },
 ];
 
+const REPORT_PIPELINE = [
+  { label: "Scheduled", value: "12", tone: "neutral" },
+  { label: "Generated Today", value: "08", tone: "good" },
+  { label: "Awaiting Review", value: "03", tone: "warn" },
+  { label: "Failed Jobs", value: "01", tone: "bad" },
+];
+
+const DISTRIBUTION = [
+  { channel: "SOC Leadership", status: "Delivered", detail: "06:00 IST daily digest" },
+  { channel: "Compliance Team", status: "Queued", detail: "PCI weekly packet" },
+  { channel: "IR On-Call", status: "Delivered", detail: "Critical incident brief" },
+  { channel: "Platform Ops", status: "Draft", detail: "Vulnerability scan recap" },
+];
+
 function ReportsPage() {
-  const heatData = Array.from({ length: 24 }, () => randInt(0, 100));
-  const maxH = Math.max(...heatData);
-
-  const heatColor = (v) => {
-    const pct = v / maxH;
-    if (pct < 0.2) return "var(--bg3)";
-    if (pct < 0.5) return "#3b82f640";
-    if (pct < 0.75) return "#f9731680";
-    return "#ef444480";
-  };
-
-  const freqData = Array.from({ length: 12 }, (_, i) => ({
-    label: `${i * 2}h`,
-    val: randInt(2, 30),
-  }));
-
   return (
     <div>
       <div className="page-title">Reports</div>
+
       <div className="grid-2">
-        <div className="card">
-          <div className="card-title">Alert Heatmap (24h)</div>
-          <div style={{ marginBottom: 6, fontSize: 10, color: "var(--text3)" }}>Hourly event density - today</div>
-          <div className="heatmap">
-            {heatData.map((v, i) => (
-              <div key={i} className="hm-cell" style={{ background: heatColor(v) }} title={`${i}:00 - ${v} events`} />
+        {/* <div className="card">
+          <div className="card-title">Reporting Pipeline</div>
+          <div className="report-metric-grid">
+            {REPORT_PIPELINE.map((item) => (
+              <div key={item.label} className={`report-metric-card ${item.tone}`}>
+                <div className="report-metric-label">{item.label}</div>
+                <div className="report-metric-value">{item.value}</div>
+              </div>
             ))}
           </div>
-          <div style={{ display: "flex", justifyContent: "space-between", marginTop: 6, fontSize: 10, color: "var(--text3)" }}>
-            <span>00:00</span>
-            <span>12:00</span>
-            <span>23:00</span>
-          </div>
-        </div>
+          <div className="report-note">This replaces the heatmap with report-generation health and queue visibility.</div>
+        </div> */}
 
         <div className="card">
+          <div className="card-title">Distribution Status</div>
+          <div className="report-distribution-list">
+            {DISTRIBUTION.map((item) => (
+              <div key={item.channel} className="report-distribution-row">
+                <div>
+                  <div className="report-distribution-title">{item.channel}</div>
+                  {/* <div className="report-distribution-detail">{item.detail}</div> */}
+                </div>
+                <span className={`report-status-pill ${item.status.toLowerCase().replace(/\s+/g, "-")}`}>{item.status}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="card">
           <div className="card-title">SLA Metrics</div>
-          {SLA_METRICS.map((m) => (
-            <div key={m.label} style={{ display: "flex", justifyContent: "space-between", marginBottom: 10, fontSize: 12 }}>
-              <span style={{ color: "var(--text2)" }}>{m.label}</span>
-              <span style={{ fontFamily: "var(--font-head)", fontWeight: 700, color: m.good ? "#22c55e" : "#f97316" }}>{m.val}</span>
-            </div>
-          ))}
+          <div className="report-sla-list">
+            {SLA_METRICS.map((metric) => (
+              <div key={metric.label} className="report-sla-row">
+                <span style={{ color: "var(--text2)" }}>{metric.label}</span>
+                <span
+                  style={{
+                    fontFamily: "var(--font-head)",
+                    fontWeight: 700,
+                    color: metric.good ? "var(--green)" : "var(--orange)",
+                  }}
+                >
+                  {metric.val}
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
-      <div className="card" style={{ marginBottom: 16 }}>
-        <div className="card-title">Event Volume (Last 24h)</div>
-        <MiniBar data={freqData} colors={["#7c3aed"]} />
-      </div>
 
       <div className="card">
         <div className="card-title">Report History</div>
@@ -82,14 +97,14 @@ function ReportsPage() {
             </tr>
           </thead>
           <tbody>
-            {REPORTS.map((r, i) => (
-              <tr key={i}>
-                <td style={{ color: "var(--text1)", fontWeight: 600 }}>{r.title}</td>
-                <td style={{ color: "var(--text3)" }}>{r.date}</td>
+            {REPORTS.map((report, index) => (
+              <tr key={index}>
+                <td style={{ color: "var(--text1)", fontWeight: 600 }}>{report.title}</td>
+                <td style={{ color: "var(--text3)" }}>{report.date}</td>
                 <td>
-                  <span style={{ fontSize: 10, background: "var(--bg3)", color: "var(--text2)", padding: "2px 6px", borderRadius: 4 }}>{r.type}</span>
+                  <span className="report-type-pill">{report.type}</span>
                 </td>
-                <td style={{ color: "var(--text3)" }}>{r.size}</td>
+                <td style={{ color: "var(--text3)" }}>{report.size}</td>
                 <td>
                   <button className="btn" style={{ fontSize: 10, padding: "2px 8px" }}>
                     Export

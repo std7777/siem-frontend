@@ -1,0 +1,101 @@
+.report-metric-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.report-metric-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 14px;
+}
+
+.report-metric-card.good {
+  border-color: rgba(34, 197, 94, 0.25);
+}
+
+.report-metric-card.warn {
+  border-color: rgba(249, 115, 22, 0.25);
+}
+
+.report-metric-card.bad {
+  border-color: rgba(239, 68, 68, 0.25);
+}
+
+.report-metric-label {
+  color: var(--text3);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.report-metric-value {
+  font-family: var(--font-head);
+  font-size: 30px;
+  font-weight: 800;
+  color: var(--text1);
+}
+
+.report-note {
+  margin-top: 12px;
+  color: var(--text3);
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.report-distribution-list,
+.report-sla-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.report-distribution-row,
+.report-sla-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: var(--r);
+  background: var(--bg2);
+  border: 1px solid var(--border);
+}
+
+.report-distribution-title {
+  color: var(--text1);
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.report-distribution-detail {
+  color: var(--text3);
+  font-size: 11px;
+}
+
+.report-status-pill,
+.report-type-pill {
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--bg3);
+  color: var(--text2);
+}
+
+.report-status-pill.delivered {
+  color: var(--green);
+  border-color: rgba(34, 197, 94, 0.25);
+}
+
+.report-status-pill.queued {
+  color: var(--yellow);
+  border-color: rgba(234, 179, 8, 0.25);
+}
+
+.report-status-pill.draft {
+  color: var(--accent2);
+  border-color: rgba(167, 139, 250, 0.25);
+}

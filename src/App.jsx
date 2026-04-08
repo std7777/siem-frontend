@@ -16,7 +16,7 @@ import ThreatIntelPage from "./pages/ThreatIntelPage";
 import SimulatorPage  from "./pages/SimulatorPage";
 import ReportsPage    from "./pages/ReportsPage";
 
-import "./styles/global.css";
+import "./styles/index.css";
 
 function App() {
   const [page,   setPage]   = useState("dashboard");
