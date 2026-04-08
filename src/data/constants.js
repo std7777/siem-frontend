@@ -37,7 +37,5 @@ export const PAGES = [
   { id: "alerts", label: "Alerts" },
   { id: "rules", label: "Detection Rules" },
   { id: "intel", label: "Threat Intel" },
-  { id: "simulator", label: "Attack Sim" },
-  { id: "reports", label: "Reports" },
 ];
 
