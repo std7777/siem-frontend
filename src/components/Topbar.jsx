@@ -1,26 +1,31 @@
 import React from "react";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { PAGES } from "../data/constants";
 
-function Topbar({ page, setPage, critCount, push }) {
+function Topbar({ critCount, push }) {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const currentPage = PAGES.find((page) => page.path === location.pathname)?.id || "dashboard";
+
   return (
     <div className="topbar">
       <div className="topbar-left">
-        <div className="topbar-brand" onClick={() => setPage("dashboard")}>
+        <div className="topbar-brand" onClick={() => navigate("/")}>
           <div className="brand">SIEM</div>
         </div>
 
         <div className="topnav">
           {PAGES.map((p) => (
-            <button
+            <NavLink
               key={p.id}
-              className={`topnav-item ${page === p.id ? "active" : ""}`}
-              onClick={() => setPage(p.id)}
+              to={p.path}
+              className={`topnav-item ${currentPage === p.id ? "active" : ""}`}
             >
               <span>{p.label}</span>
               {p.id === "alerts" && critCount > 0 && (
                 <span className="nav-badge">{critCount}</span>
               )}
-            </button>
+            </NavLink>
           ))}
         </div>
       </div>
@@ -46,4 +51,3 @@ function Topbar({ page, setPage, critCount, push }) {
 }
 
 export default Topbar;
-

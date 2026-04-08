@@ -33,10 +33,10 @@ export const IPS = ["192.168.1.", "10.0.0.", "172.16.0.", "203.0.113."];
 export const EXT_IPS = ["45.33.32.", "185.220.101.", "198.51.100.", "91.108.56."];
 
 export const PAGES = [
-  { id: "dashboard", label: "Dashboard" },
-  { id: "alerts", label: "Alerts" },
-  { id: "rules", label: "Detection Rules" },
-  { id: "intel", label: "Threat Intel" },
-  { id: "simulator", label: "Attack Sim" },
+  { id: "dashboard", label: "Dashboard", path: "/" },
+  { id: "alerts", label: "Alerts", path: "/alerts" },
+  { id: "rules", label: "Detection Rules", path: "/rules" },
+  { id: "intel", label: "Threat Intel", path: "/intel" },
+  { id: "simulator", label: "Attack Sim", path: "/simulator" },
 ];
 
