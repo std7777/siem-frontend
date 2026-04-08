@@ -1,0 +1,7 @@
+1]
+images of the goal project and its files.
+1.change the name of the project to "SIEM". change the head-font to space grotesk.
+2.remove light mode and all redundant animations and icons.
+3.move the side bar to top bar. remove the home/tab_title. 
+4. restructure the design of dashboard according to the picture- move the top ip src and dest card from network tab to dashboard and remove the network tab. the remove total events card and move the severity card in its place. move the live feed to the bottom. remove the event frequency card. 
+5. the top categories card is not working. on toggling the detection rules the change is not reflected to the dashboard.

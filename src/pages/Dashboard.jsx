@@ -5,7 +5,7 @@ import { SeverityBadge, MiniBar, DonutChart } from "../components/Charts";
 function Dashboard({ alerts, rules, dispatch, push }) {
   const crit = alerts.filter((a) => a.severity === "CRITICAL").length;
   const unacked = alerts.filter((a) => !a.acked).length;
-  const recent = alerts.slice(0, 8);
+  const recent = alerts.slice(0, 6);
   const activeRules = (rules || []).filter((r) => r.on).length;
 
   const sevData = SEVERITIES.map((s) => ({
@@ -129,7 +129,7 @@ function Dashboard({ alerts, rules, dispatch, push }) {
 
       <div className="card">
         <div className="card-title">Live Event Feed</div>
-        <div style={{ maxHeight: 280, overflowY: "auto" }}>
+        <div style={{ maxHeight: 200, overflowY: "auto" }}>
           {recent.length === 0 && (
             <div style={{ color: "var(--text3)", fontSize: 12, padding: "20px 0", textAlign: "center" }}>
               No events yet — simulate an attack below
