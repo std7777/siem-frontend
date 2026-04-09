@@ -4,7 +4,6 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { AlertContext, RulesContext } from "./context/AppContext";
 import { alertReducer, initialAlerts, makeAlert } from "./data/alertData";
 import { DEFAULT_RULES } from "./data/rules";
-import { categoryKey } from "./data/utils";
 import { useToasts } from "./hooks/useToasts";
 
 import Topbar from "./components/Topbar";
@@ -18,24 +17,17 @@ import SimulatorPage from "./pages/SimulatorPage";
 
 import "./styles/index.css";
 
-//Convert rules into lookup object
-function buildMap(rules) {
-  return rules.reduce((accumulator, rule) => {
-    const key = categoryKey(rule.cat);
-    accumulator[key] = accumulator[key] || rule.on;
-    return accumulator;
-  }, {});
+function buildEnabledRuleIds(rules) {
+  return new Set(rules.filter((rule) => rule.on).map((rule) => rule.id));
 }
 
-function filterVisibleAlerts(alerts, ruleCategoryEnabled) {
+function filterVisibleAlerts(alerts, enabledRuleIds) {
   return alerts.filter((alert) => {
-    const key = categoryKey(alert.category);
-
-    if (Object.prototype.hasOwnProperty.call(ruleCategoryEnabled, key)) {
-      return ruleCategoryEnabled[key];
+    if (alert.ruleId == null) {
+      return true;
     }
 
-    return true;
+    return enabledRuleIds.has(alert.ruleId);
   });
 }
 
@@ -47,15 +39,15 @@ function App() {
   useEffect(() => {
     const timer = setInterval(() => {
       if (Math.random() < 0.4) {
-        dispatch({ type: "ADD", payload: makeAlert() });
+        dispatch({ type: "ADD", payload: makeAlert({}, rules) });
       }
     }, 6000);
 
     return () => clearInterval(timer);
-  }, []);
+  }, [rules]);
 
-  const ruleCategoryEnabled = buildMap(rules);
-  const visibleAlerts = filterVisibleAlerts(alerts, ruleCategoryEnabled);
+  const enabledRuleIds = buildEnabledRuleIds(rules);
+  const visibleAlerts = filterVisibleAlerts(alerts, enabledRuleIds);
 
   const critCount = visibleAlerts.filter((alert) => alert.severity === "CRITICAL" && !alert.acked).length;
 
@@ -70,7 +62,7 @@ function App() {
               <Route path="/alerts" element={<AlertsPage alerts={visibleAlerts} dispatch={dispatch} push={push} />} />
               <Route path="/rules" element={<RulesPage push={push} />} />
               <Route path="/intel" element={<ThreatIntelPage />} />
-              <Route path="/simulator" element={<SimulatorPage dispatch={dispatch} push={push} />} />
+              <Route path="/simulator" element={<SimulatorPage dispatch={dispatch} push={push} rules={rules} />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </div>

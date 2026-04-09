@@ -117,11 +117,11 @@ export const ATTACK_SIMULATIONS = [
   },
 ];
 
-export function buildSimulationEvents(simulation) {
+export function buildSimulationEvents(simulation, rules = []) {
   return simulation.alerts.map((alert, index) =>
     makeAlert({
       ...alert,
       rule: withRuleNumber(alert.rule, index),
-    })
+    }, rules)
   );
 }

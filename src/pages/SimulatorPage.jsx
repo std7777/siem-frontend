@@ -1,8 +1,9 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 
 import { ATTACK_SIMULATIONS, buildSimulationEvents } from "../data/simulations";
 
-function SimulatorPage({ dispatch, push }) {
+function SimulatorPage({ dispatch, push, rules }) {
   const [activeSimulationId, setActiveSimulationId] = useState(null);
 
   const runSimulation = (simulation) => {
@@ -10,7 +11,7 @@ function SimulatorPage({ dispatch, push }) {
       return;
     }
 
-    const events = buildSimulationEvents(simulation);
+    const events = buildSimulationEvents(simulation, rules);
     setActiveSimulationId(simulation.id);
 
     events.forEach((event, index) => {
@@ -55,5 +56,19 @@ function SimulatorPage({ dispatch, push }) {
     </div>
   );
 }
+
+SimulatorPage.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  push: PropTypes.func.isRequired,
+  rules: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      cat: PropTypes.string.isRequired,
+      sev: PropTypes.string.isRequired,
+      on: PropTypes.bool.isRequired,
+    })
+  ).isRequired,
+};
 
 export default SimulatorPage;
