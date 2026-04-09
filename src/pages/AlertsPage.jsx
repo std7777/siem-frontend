@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import { SeverityBadge } from "../components/Charts";
 
 function AlertsPage({ alerts, dispatch, push }) {
@@ -100,5 +101,23 @@ function AlertsPage({ alerts, dispatch, push }) {
     </div>
   );
 }
+
+AlertsPage.propTypes = {
+  alerts: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+      time: PropTypes.string.isRequired,
+      severity: PropTypes.string.isRequired,
+      category: PropTypes.string.isRequired,
+      src: PropTypes.string.isRequired,
+      dst: PropTypes.string.isRequired,
+      rule: PropTypes.string.isRequired,
+      message: PropTypes.string.isRequired,
+      acked: PropTypes.bool,
+    })
+  ).isRequired,
+  dispatch: PropTypes.func.isRequired,
+  push: PropTypes.func.isRequired,
+};
 
 export default AlertsPage;

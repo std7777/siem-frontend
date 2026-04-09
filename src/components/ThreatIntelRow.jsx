@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 class ThreatIntelRow extends Component {
   render() {
@@ -29,5 +30,14 @@ class ThreatIntelRow extends Component {
     );
   }
 }
+
+ThreatIntelRow.propTypes = {
+  ioc: PropTypes.shape({
+    type: PropTypes.string.isRequired,
+    val: PropTypes.string.isRequired,
+    threat: PropTypes.string.isRequired,
+    conf: PropTypes.number.isRequired,
+  }).isRequired,
+};
 
 export default ThreatIntelRow;

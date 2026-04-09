@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 class ToastContainer extends Component {
   constructor(props) {
@@ -35,5 +36,14 @@ class ToastContainer extends Component {
     );
   }
 }
+
+ToastContainer.propTypes = {
+  toasts: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+      msg: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+};
 
 export default ToastContainer;

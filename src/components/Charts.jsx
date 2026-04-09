@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { SEV_COLOR, SEV_BG } from "../data/constants";
 
 export function SeverityBadge({ severity }) {
@@ -62,3 +63,18 @@ export function DonutChart({ data, size = 100 }) {
     </svg>
   );
 }
+
+SeverityBadge.propTypes = {
+  severity: PropTypes.string.isRequired,
+};
+
+DonutChart.propTypes = {
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string.isRequired,
+      val: PropTypes.number.isRequired,
+      color: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  size: PropTypes.number,
+};

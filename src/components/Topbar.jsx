@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { PAGES } from "../data/constants";
 
@@ -47,5 +48,10 @@ function Topbar({ critCount, push }) {
     </div>
   );
 }
+
+Topbar.propTypes = {
+  critCount: PropTypes.number.isRequired,
+  push: PropTypes.func.isRequired,
+};
 
 export default Topbar;
