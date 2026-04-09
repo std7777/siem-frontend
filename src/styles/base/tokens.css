@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;500;600;700;800&display=swap");
 
+/* properties defined as tokens to maintain eveness */
 :root {
   --bg0: #111827;
   --bg1: #1f2937;

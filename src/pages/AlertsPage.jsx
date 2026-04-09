@@ -102,6 +102,7 @@ function AlertsPage({ alerts, dispatch, push }) {
   );
 }
 
+//prop validation
 AlertsPage.propTypes = {
   alerts: PropTypes.arrayOf(
     PropTypes.shape({

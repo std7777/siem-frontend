@@ -3,27 +3,35 @@ import PropTypes from "prop-types";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { PAGES } from "../data/constants";
 
+function getPgId(path) {
+  for (let i = 0; i < PAGES.length; i += 1) {
+    const p = PAGES[i];
+    if (p.path === path) {
+      return p.id;
+    }
+  }
+
+  return "dashboard";
+}
+
 function Topbar({ critCount, push }) {
-  const navigate = useNavigate();
-  const location = useLocation();
-  //find a page whose path is same as current path.if found get its id. if that page is invalidthen use dashboard
-  // validation.
-  const currentPage = PAGES.find((page) => page.path === location.pathname)?.id || "dashboard";   
+  const nav = useNavigate();
+  const loc = useLocation();
+  const curPg = getPgId(loc.pathname);
 
   return (
     <div className="topbar">
       <div className="topbar-left">
-        <div className="topbar-brand" onClick={() => navigate("/")}>
+        <div className="topbar-brand" onClick={() => nav("/")}>
           <div className="brand">CRON EYE</div>
         </div>
 
         <div className="topnav">
           {PAGES.map((p) => (
-            //react component
             <NavLink
               key={p.id}
               to={p.path}
-              className={`topnav-item ${currentPage === p.id ? "active" : ""}`}
+              className={`topnav-item ${curPg === p.id ? "active" : ""}`}
             >
               <span>{p.label}</span>
               {p.id === "alerts" && critCount > 0 && (
@@ -48,7 +56,7 @@ function Topbar({ critCount, push }) {
     </div>
   );
 }
-
+ //prop validation
 Topbar.propTypes = {
   critCount: PropTypes.number.isRequired,
   push: PropTypes.func.isRequired,

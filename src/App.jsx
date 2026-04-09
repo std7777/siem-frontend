@@ -18,6 +18,27 @@ import SimulatorPage from "./pages/SimulatorPage";
 
 import "./styles/index.css";
 
+//Convert rules into lookup object
+function buildMap(rules) {
+  return rules.reduce((accumulator, rule) => {
+    const key = categoryKey(rule.cat);
+    accumulator[key] = accumulator[key] || rule.on;
+    return accumulator;
+  }, {});
+}
+
+function filterVisibleAlerts(alerts, ruleCategoryEnabled) {
+  return alerts.filter((alert) => {
+    const key = categoryKey(alert.category);
+
+    if (Object.prototype.hasOwnProperty.call(ruleCategoryEnabled, key)) {
+      return ruleCategoryEnabled[key];
+    }
+
+    return true;
+  });
+}
+
 function App() {
   const [alerts, dispatch] = useReducer(alertReducer, initialAlerts);
   const { toasts, push } = useToasts();
@@ -33,20 +54,8 @@ function App() {
     return () => clearInterval(timer);
   }, []);
 
-  const ruleCategoryEnabled = rules.reduce((acc, rule) => {
-    const key = categoryKey(rule.cat);
-    acc[key] = acc[key] || rule.on;
-    return acc;
-  }, {});
-
-  const visibleAlerts = alerts.filter((alert) => {
-    const key = categoryKey(alert.category);
-    if (Object.prototype.hasOwnProperty.call(ruleCategoryEnabled, key)) {
-      return ruleCategoryEnabled[key];
-    }
-
-    return true;
-  });
+  const ruleCategoryEnabled = buildMap(rules);
+  const visibleAlerts = filterVisibleAlerts(alerts, ruleCategoryEnabled);
 
   const critCount = visibleAlerts.filter((alert) => alert.severity === "CRITICAL" && !alert.acked).length;
 

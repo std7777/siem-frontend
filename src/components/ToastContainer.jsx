@@ -37,6 +37,7 @@ class ToastContainer extends Component {
   }
 }
 
+//prop validation
 ToastContainer.propTypes = {
   toasts: PropTypes.arrayOf(
     PropTypes.shape({

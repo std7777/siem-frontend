@@ -3,33 +3,63 @@ import { SEVERITIES, SEV_COLOR } from "../data/constants";
 import { SeverityBadge, DonutChart } from "../components/Charts";
 import { categoryKey } from "../data/utils";
 
+function cntSev(alerts, sev) {
+  return alerts.filter((a) => a.severity === sev).length;
+}
+
+function mkSev(alerts) {
+  return SEVERITIES.map((sev) => {
+    return {
+      label: sev.slice(0, 4),
+      val: cntSev(alerts, sev),
+      color: SEV_COLOR[sev],
+    };
+  });
+}
+
+function mkCats(alerts) {
+  const cats = alerts.reduce((acc, a) => {
+    const k = categoryKey(a.category);
+    if (!k) {
+      return acc;
+    }
+
+    if (!acc[k]) {
+      acc[k] = { category: a.category, count: 0 };
+    }
+
+    acc[k].count += Number(a.count) > 0 ? Number(a.count) : 1;
+    return acc;
+  }, {});
+
+  return Object.values(cats);
+}
+
+function mkTop(alerts, key, lim) {
+  const counts = alerts.reduce((acc, a) => {
+    const v = a[key];
+    if (!v) {
+      return acc;
+    }
+
+    acc[v] = (acc[v] || 0) + 1;
+    return acc;
+  }, {});
+
+  return Object.entries(counts)
+    .sort((left, right) => right[1] - left[1])
+    .slice(0, lim)
+    .map(([ip, count]) => ({ ip, count }));
+}
+
 function Dashboard({ alerts, rules, dispatch, push }) {
   const crit = alerts.filter((alert) => alert.severity === "CRITICAL").length;
   const unacked = alerts.filter((alert) => !alert.acked).length;
   const recent = alerts.slice(0, 6);
   const activeRules = (rules || []).filter((rule) => rule.on).length;
 
-  const sevData = SEVERITIES.map((severity) => ({
-    label: severity.slice(0, 4),
-    val: alerts.filter((alert) => alert.severity === severity).length,
-    color: SEV_COLOR[severity],
-  }));
-
-  const alertCategories = Object.values(
-    alerts.reduce((acc, alert) => {
-      const key = categoryKey(alert.category);
-      if (!key) {
-        return acc;
-      }
-
-      if (!acc[key]) {
-        acc[key] = { category: alert.category, count: 0 };
-      }
-
-      acc[key].count += Number(alert.count) > 0 ? Number(alert.count) : 1;
-      return acc;
-    }, {})
-  );
+  const sevData = mkSev(alerts);
+  const alertCategories = mkCats(alerts);
 
   const categoriesByCount = alertCategories
     .sort((left, right) => right.count - left.count)
@@ -40,22 +70,8 @@ function Dashboard({ alerts, rules, dispatch, push }) {
     val: item.count,
   }));
 
-  const topIps = (key, limit = 6) => {
-    const counts = alerts.reduce((acc, alert) => {
-      const ip = alert[key];
-      if (!ip) return acc;
-      acc[ip] = (acc[ip] || 0) + 1;
-      return acc;
-    }, {});
-
-    return Object.entries(counts)
-      .sort((left, right) => right[1] - left[1])
-      .slice(0, limit)
-      .map(([ip, count]) => ({ ip, count }));
-  };
-
-  const topSrc = topIps("src", 6);
-  const topDst = topIps("dst", 6);
+  const topSrc = mkTop(alerts, "src", 6);
+  const topDst = mkTop(alerts, "dst", 6);
 
   const IpBar = ({ ip, count, color }) => (
     <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>

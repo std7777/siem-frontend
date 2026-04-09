@@ -22,7 +22,7 @@ function RulesPage({ push }) {
         <span style={{ color: "var(--text2)", fontSize: 12 }}>
           {rules.filter((r) => r.on).length} / {rules.length} rules enabled
         </span>
-        <button className="btn primary" onClick={() => push("New rule editor — coming soon")}>
+        <button className="btn primary" onClick={() => push("rule editor currently out of scope")}>
           + New Rule
         </button>
       </div>

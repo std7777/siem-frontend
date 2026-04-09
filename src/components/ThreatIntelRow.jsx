@@ -31,6 +31,7 @@ class ThreatIntelRow extends Component {
   }
 }
 
+//prop validation
 ThreatIntelRow.propTypes = {
   ioc: PropTypes.shape({
     type: PropTypes.string.isRequired,

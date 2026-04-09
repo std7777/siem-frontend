@@ -1,3 +1,5 @@
+/* handles css when screen size changes  */
+
 @media (max-width: 900px) {
   .grid-4 {
     grid-template-columns: repeat(2, 1fr);
