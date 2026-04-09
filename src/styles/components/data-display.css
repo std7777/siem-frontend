@@ -18,8 +18,8 @@
 .alert-table td {
   padding: 7px 10px;
   border-bottom: 1px solid var(--border);
-  vertical-align: middle;
-  max-width: 200px;
+  vertical-align: center;
+  max-width: 400px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

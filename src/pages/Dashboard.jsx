@@ -31,25 +31,7 @@ function Dashboard({ alerts, rules, dispatch, push }) {
     }, {})
   );
 
-  const ruleCategories = Object.values(
-    (rules || [])
-      .filter((rule) => rule.on)
-      .reduce((acc, rule) => {
-        const key = categoryKey(rule.cat);
-        if (!key) {
-          return acc;
-        }
-
-        if (!acc[key]) {
-          acc[key] = { category: rule.cat, count: 0 };
-        }
-
-        acc[key].count += Number(rule.hits) || 0;
-        return acc;
-      }, {})
-  );
-
-  const categoriesByCount = (alertCategories.length > 0 ? alertCategories : ruleCategories)
+  const categoriesByCount = alertCategories
     .sort((left, right) => right.count - left.count)
     .slice(0, 5);
 

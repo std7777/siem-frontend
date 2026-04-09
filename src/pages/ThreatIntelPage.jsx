@@ -74,19 +74,15 @@ function ThreatIntelPage() {
                   <td style={{ fontFamily: "var(--font-mono)", color: "var(--text1)" }}>{ioc.val}</td>
                   <td style={{ color: "var(--text2)" }}>{ioc.threat}</td>
                   <td>
-                    <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                      <div style={{ width: 60, background: "var(--bg3)", height: 5, borderRadius: 3 }}>
-                        <div
-                          style={{
-                            width: `${ioc.conf}%`,
-                            height: "100%",
-                            background: ioc.conf > 90 ? "#ef4444" : ioc.conf > 75 ? "#f97316" : "#eab308",
-                            borderRadius: 3,
-                          }}
-                        />
-                      </div>
-                      <span style={{ fontSize: 10, color: "var(--text3)" }}>{ioc.conf}%</span>
-                    </div>
+                    <span
+                      style={{
+                        fontSize: 11,
+                        fontWeight: 700,
+                        color: ioc.conf > 90 ? "#ef4444" : ioc.conf > 75 ? "#f97316" : "#eab308",
+                      }}
+                    >
+                      {ioc.conf}%
+                    </span>
                   </td>
                 </tr>
               ))}
@@ -133,8 +129,8 @@ function ThreatIntelPage() {
         </div>
       )}
 
-      <div className="card" style={{ marginTop: 16 }}>
-        <div className="card-title">Report History</div>
+        <div className="card-title" style={{ marginTop: 16, marginLeft:7}}>Report History</div>
+      <div className="card" style={{ padding:0 }}>
         <table className="alert-table">
           <thead>
             <tr>

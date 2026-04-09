@@ -30,12 +30,7 @@ function Topbar({ critCount, push }) {
         </div>
       </div>
 
-      <div className="topbar-status">
-        <div className="status-dot" />
-        <span>System Operational</span>
-      </div>
-
-      <div style={{ fontSize: 11, color: "var(--text3)" }}>
+      <div style={{ fontSize: 12, color: "var(--text3)" }}>
         {new Date().toLocaleString("en-IN")}
       </div>
 

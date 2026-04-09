@@ -10,9 +10,37 @@ function withRuleNumber(rule, index) {
 
 export const ATTACK_SIMULATIONS = [
   {
+    id: "ransomware",
+    label: "Ransomware Activity",
+    color: "#dc2626",
+    desc: "Mass encryption behavior on a workstation.",
+    alerts: [
+      {
+        severity: "CRITICAL",
+        category: "Ransomware",
+        rule: "Mass File Encryption Detected",
+        message: "Rapid file modifications indicate possible ransomware",
+        src: "10.0.0.55",
+        dst: "10.0.0.55",
+        user: "backup_usr",
+        raw: "high-volume rename/write activity across user profile",
+      },
+      {
+        severity: "HIGH",
+        category: "Data Exfil",
+        rule: "Large Outbound Transfer",
+        message: "Unusual outbound transfer observed before encryption burst",
+        src: "10.0.0.55",
+        dst: "91.108.56.12",
+        user: "backup_usr",
+        raw: "proxy: outbound transfer exceeded baseline",
+      },
+    ],
+  },
+  {
     id: "brute-force",
     label: "SSH Brute Force",
-    color: "#ef4444",
+    color: "#ef7244",
     desc: "Repeated SSH login attempts against a Linux host.",
     alerts: [
       {
@@ -62,34 +90,6 @@ export const ATTACK_SIMULATIONS = [
         dst: "10.0.0.42",
         user: "jdoe",
         raw: "WINWORD.EXE -> powershell.exe",
-      },
-    ],
-  },
-  {
-    id: "ransomware",
-    label: "Ransomware Activity",
-    color: "#dc2626",
-    desc: "Mass encryption behavior on a workstation.",
-    alerts: [
-      {
-        severity: "CRITICAL",
-        category: "Ransomware",
-        rule: "Mass File Encryption Detected",
-        message: "Rapid file modifications indicate possible ransomware",
-        src: "10.0.0.55",
-        dst: "10.0.0.55",
-        user: "backup_usr",
-        raw: "high-volume rename/write activity across user profile",
-      },
-      {
-        severity: "HIGH",
-        category: "Data Exfil",
-        rule: "Large Outbound Transfer",
-        message: "Unusual outbound transfer observed before encryption burst",
-        src: "10.0.0.55",
-        dst: "91.108.56.12",
-        user: "backup_usr",
-        raw: "proxy: outbound transfer exceeded baseline",
       },
     ],
   },
