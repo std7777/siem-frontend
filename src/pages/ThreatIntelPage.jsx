@@ -123,7 +123,11 @@ function ThreatIntelPage() {
                   Last sync: {feed.last} - {feed.count.toLocaleString()} indicators
                 </div>
               </div>
-              <span style={{ fontSize: 10, color: feed.status === "active" ? "#22c55e" : "#ef4444" }}>{feed.status.toUpperCase()}</span>
+              <span style={{ fontSize: 10, color: feed.status === "active" ? "#22c55e" : "#ef4444", 
+                             backgroundColor: feed.status === "active" ? "#113d21" : "#3f1515",
+                             padding: "2px 6px", borderRadius: 4  }}>
+                {feed.status.toUpperCase()}
+              </span>
             </div>
           ))}
         </div>
@@ -147,7 +151,18 @@ function ThreatIntelPage() {
                 <td style={{ color: "var(--text1)", fontWeight: 600 }}>{report.title}</td>
                 <td style={{ color: "var(--text3)" }}>{report.date}</td>
                 <td>
-                  <span className="report-type-pill">{report.type}</span>
+                  <span
+                    style={{
+                      fontSize: 10,
+                      padding: "2px 8px",
+                      borderRadius: 999,
+                      border: "1px solid var(--border)",
+                      background: "var(--bg3)",
+                      color: "var(--text2)",
+                    }}
+                  >
+                    {report.type}
+                  </span>
                 </td>
                 <td style={{ color: "var(--text3)" }}>{report.size}</td>
                 <td>

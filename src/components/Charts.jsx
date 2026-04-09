@@ -15,32 +15,6 @@ export function SeverityBadge({ severity }) {
   );
 }
 
-export function MiniBar({ data, colors }) {
-  const max = Math.max(...data.map((item) => item.val), 1);
-
-  return (
-    <div className="mini-bar-list">
-      {data.map((item, index) => (
-        <div key={index} className="mini-bar-row">
-          <div className="mini-bar-header">
-            <span className="mini-bar-label">{item.label}</span>
-            <span className="mini-bar-value">{item.val}</span>
-          </div>
-          <div className="mini-bar-track">
-            <div
-              className="mini-bar-fill"
-              style={{
-                width: `${Math.max(8, Math.round((item.val / max) * 100))}%`,
-                background: colors[index % colors.length],
-              }}
-            />
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-}
-
 export function DonutChart({ data, size = 100 }) {
   const radius = 38;
   const centerX = size / 2;
