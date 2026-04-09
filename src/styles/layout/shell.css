@@ -8,7 +8,7 @@
 .content {
   flex: 1;
   overflow-y: auto;
-  padding: 20px 24px;
+  padding: 16px;
 }
 
 .grid-4,
@@ -35,9 +35,8 @@
 
 .page-title {
   font-family: var(--font-head);
-  font-size: 26px;
-  font-weight: 800;
+  font-size: 24px;
+  font-weight: 700;
   color: var(--text1);
-  margin-bottom: 14px;
-  letter-spacing: -0.5px;
+  margin-bottom: 12px;
 }

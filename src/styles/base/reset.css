@@ -9,8 +9,9 @@
 body {
   background: var(--bg0);
   color: var(--text1);
-  font-family: var(--font-mono);
+  font-family: var(--font-head);
   font-size: 13px;
+  line-height: 1.4;
 }
 
 ::-webkit-scrollbar {

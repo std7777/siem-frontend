@@ -1,17 +1,17 @@
 @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;500;600;700;800&display=swap");
 
 :root {
-  --bg0: #0a0c10;
-  --bg1: #0f1117;
-  --bg2: #161923;
-  --bg3: #1e2330;
-  --border: rgba(255, 255, 255, 0.07);
-  --border2: rgba(255, 255, 255, 0.12);
-  --text1: #e8eaf0;
-  --text2: #8b93a8;
-  --text3: #4f5668;
-  --accent: #7c3aed;
-  --accent2: #a78bfa;
+  --bg0: #111827;
+  --bg1: #1f2937;
+  --bg2: #273244;
+  --bg3: #374151;
+  --border: #4b5563;
+  --border2: #6b7280;
+  --text1: #f9fafb;
+  --text2: #d1d5db;
+  --text3: #9ca3af;
+  --accent: #2563eb;
+  --accent2: #60a5fa;
   --green: #22c55e;
   --red: #ef4444;
   --yellow: #eab308;
@@ -19,6 +19,6 @@
   --orange: #f97316;
   --font-head: "Space Grotesk", sans-serif;
   --font-mono: "JetBrains Mono", monospace;
-  --r: 8px;
-  --r2: 12px;
+  --r: 6px;
+  --r2: 8px;
 }

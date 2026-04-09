@@ -10,16 +10,15 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 30px;
+  padding: 10px 14px;
   border-radius: var(--r2);
-  background: linear-gradient(180deg, rgba(124, 58, 237, 0.18), rgba(124, 58, 237, 0.08));
-  border: 1px solid rgba(167, 139, 250, 0.22);
+  background: var(--bg1);
+  border: 1px solid var(--border);
 }
 
 .alerts-total-label {
   color: var(--text3);
   font-size: 11px;
-  letter-spacing: 1.6px;
   text-transform: uppercase;
   white-space: nowrap;
 }
@@ -28,7 +27,6 @@
   font-family: var(--font-head);
   font-size: 20px;
   font-weight: 600;
-  line-height: 1;
   color: var(--text1);
 }
 

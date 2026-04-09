@@ -5,7 +5,9 @@ import { PAGES } from "../data/constants";
 function Topbar({ critCount, push }) {
   const navigate = useNavigate();
   const location = useLocation();
-  const currentPage = PAGES.find((page) => page.path === location.pathname)?.id || "dashboard";
+  //find a page whose path is same as current path.if found get its id. if that page is invalidthen use dashboard
+  // validation.
+  const currentPage = PAGES.find((page) => page.path === location.pathname)?.id || "dashboard";   
 
   return (
     <div className="topbar">
@@ -16,6 +18,7 @@ function Topbar({ critCount, push }) {
 
         <div className="topnav">
           {PAGES.map((p) => (
+            //react component
             <NavLink
               key={p.id}
               to={p.path}
