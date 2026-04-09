@@ -9,7 +9,7 @@ class ThreatIntelRow extends Component {
     return (
       <tr>
         <td>
-          <span style={{ background: "var(--bg3)", color: "var(--accent2)", padding: "1px 6px", borderRadius: 4, fontSize: 10 }}>
+          <span style={{ background: "var(--accent-soft)", color: "var(--accent2)", padding: "1px 6px", borderRadius: 4, fontSize: 10, border: "1px solid var(--accent-border)" }}>
             {ioc.type}
           </span>
         </td>

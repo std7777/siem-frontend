@@ -25,8 +25,9 @@
   font-family: var(--font-head);
   font-size: 24px;
   font-weight: 700;
-  color: var(--text1);
+  color: var(--accent2);
   line-height: 1;
+  text-shadow: 0 0 18px color-mix(in srgb, var(--accent) 28%, transparent);
 }
 
 .topnav {
@@ -53,14 +54,14 @@
 }
 
 .topnav-item:hover {
-  background: var(--bg2);
-  color: var(--text1);
+  background: var(--accent-soft);
+  color: var(--accent-glow);
 }
 
 .topnav-item.active {
-  background: var(--bg3);
-  border-color: var(--border);
-  color: var(--text1);
+  background: var(--accent-soft);
+  border-color: var(--accent-border);
+  color: var(--accent2);
 }
 
 .topbar-status {

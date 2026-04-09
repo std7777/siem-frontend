@@ -31,7 +31,7 @@ function SimulatorPage({ dispatch, push, rules }) {
     <div>
       <div className="page-title">Attack Sim</div>
 
-      <div className="card" style={{ marginBottom: 16, borderColor: "rgba(124,58,237,0.3)" }}>
+      <div className="card" style={{ marginBottom: 16, borderColor: "var(--accent-border)" }}>
         <div className="card-title" style={{ color: "var(--accent2)" }}>
           Attack Simulation Engine
         </div>

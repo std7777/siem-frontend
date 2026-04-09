@@ -2,17 +2,20 @@
 
 /* properties defined as tokens to maintain eveness */
 :root {
-  --bg0: #111827;
-  --bg1: #1f2937;
-  --bg2: #273244;
-  --bg3: #374151;
-  --border: #4b5563;
-  --border2: #6b7280;
+  --bg0: #111127;
+  --bg1: #201f37;
+  --bg2: #212041;
+  --bg3: #3c3751;
+  --border: #514b63;
+  --border2: #6b6b80;
   --text1: #f9fafb;
   --text2: #d1d5db;
-  --text3: #9ca3af;
-  --accent: #2563eb;
-  --accent2: #60a5fa;
+  --text3: #9ca2af;
+  --accent: #8825eb;
+  --accent2: #b57df2;
+  --accent-soft: color-mix(in srgb, var(--accent) 18%, var(--bg2));
+  --accent-border: color-mix(in srgb, var(--accent) 45%, var(--border));
+  --accent-glow: color-mix(in srgb, var(--accent2) 72%, white);
   --green: #22c55e;
   --red: #ef4444;
   --yellow: #eab308;

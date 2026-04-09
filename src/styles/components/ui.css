@@ -21,12 +21,13 @@
 
 .btn.primary {
   background: var(--accent);
-  border-color: var(--accent);
+  border-color: var(--accent-border);
   color: #fff;
 }
 
 .btn.primary:hover {
-  background: #1d4ed8;
+  background: color-mix(in srgb, var(--accent) 88%, black);
+  border-color: var(--accent2);
 }
 
 .btn.danger {

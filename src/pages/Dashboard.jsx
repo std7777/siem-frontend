@@ -3,6 +3,14 @@ import { SEVERITIES, SEV_COLOR } from "../data/constants";
 import { SeverityBadge, DonutChart } from "../components/Charts";
 import { categoryKey } from "../data/utils";
 
+const CATEGORY_BAR_COLORS = [
+  "var(--accent2)",
+  "var(--accent)",
+  "var(--blue)",
+  "var(--orange)",
+  "var(--yellow)",
+];
+
 function cntSev(alerts, sev) {
   return alerts.filter((a) => a.severity === sev).length;
 }
@@ -167,7 +175,7 @@ function Dashboard({ alerts, rules, dispatch, push }) {
               key={item.label}
               label={item.label}
               count={item.val}
-              color={["#7c3aed", "#3b82f6", "#f97316", "#22c55e", "#eab308"][index % 5]}
+              color={CATEGORY_BAR_COLORS[index % CATEGORY_BAR_COLORS.length]}
             />
           ))}
           {catCounts.length === 0 && <div style={{ color: "var(--text3)", fontSize: 11, marginTop: 10 }}>No data yet</div>}
