@@ -12,7 +12,6 @@ export const ATTACK_SIMULATIONS = [
   {
     id: "ransomware",
     label: "Ransomware Activity",
-    color: "#dc2626",
     desc: "Mass encryption behavior on a workstation.",
     alerts: [
       {
@@ -40,7 +39,6 @@ export const ATTACK_SIMULATIONS = [
   {
     id: "brute-force",
     label: "SSH Brute Force",
-    color: "#ef7244",
     desc: "Repeated SSH login attempts against a Linux host.",
     alerts: [
       {
@@ -68,7 +66,6 @@ export const ATTACK_SIMULATIONS = [
   {
     id: "phishing",
     label: "Phishing Email",
-    color: "#ec4899",
     desc: "Suspicious email click leading to endpoint activity.",
     alerts: [
       {
@@ -96,7 +93,6 @@ export const ATTACK_SIMULATIONS = [
   {
     id: "port-scan",
     label: "Port Scan",
-    color: "#eab308",
     desc: "Reconnaissance traffic probing multiple exposed services.",
     alerts: [
       {

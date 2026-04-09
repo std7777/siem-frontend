@@ -1,25 +1,24 @@
+.topbar,
+.topbar-left,
+.topnav,
+.topbar-status {
+  display: flex;
+  align-items: center;
+}
+
 .topbar {
   background: var(--bg1);
   border-bottom: 1px solid var(--border);
   padding: 0 24px;
   min-height: 52px;
-  display: flex;
-  align-items: center;
   gap: 16px;
   flex-shrink: 0;
 }
 
 .topbar-left {
-  display: flex;
-  align-items: center;
   gap: 18px;
   flex: 1;
   min-width: 0;
-}
-
-.topbar-brand {
-  display: flex;
-  flex-direction: column;
 }
 
 .topbar-brand .brand {
@@ -31,17 +30,7 @@
   line-height: 1;
 }
 
-.topbar-brand .sub {
-  font-size: 9px;
-  color: var(--text3);
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  line-height: 1;
-}
-
 .topnav {
-  display: flex;
-  align-items: center;
   gap: 6px;
   min-width: 0;
   overflow-x: auto;
@@ -78,8 +67,6 @@
 }
 
 .topbar-status {
-  display: flex;
-  align-items: center;
   gap: 6px;
   font-size: 11px;
   color: var(--text2);

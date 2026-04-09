@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import ThreatIntelRow from "../components/ThreatIntelRow";
 
 const IOCS = [
   { type: "IP", val: "185.220.101.47", threat: "Tor Exit Node", conf: 97 },
@@ -65,26 +66,7 @@ function ThreatIntelPage() {
             </thead>
             <tbody>
               {IOCS.map((ioc, idx) => (
-                <tr key={idx}>
-                  <td>
-                    <span style={{ background: "var(--bg3)", color: "var(--accent2)", padding: "1px 6px", borderRadius: 4, fontSize: 10 }}>
-                      {ioc.type}
-                    </span>
-                  </td>
-                  <td style={{ fontFamily: "var(--font-mono)", color: "var(--text1)" }}>{ioc.val}</td>
-                  <td style={{ color: "var(--text2)" }}>{ioc.threat}</td>
-                  <td>
-                    <span
-                      style={{
-                        fontSize: 11,
-                        fontWeight: 700,
-                        color: ioc.conf > 90 ? "#ef4444" : ioc.conf > 75 ? "#f97316" : "#eab308",
-                      }}
-                    >
-                      {ioc.conf}%
-                    </span>
-                  </td>
-                </tr>
+                <ThreatIntelRow key={idx} ioc={ioc} />
               ))}
             </tbody>
           </table>

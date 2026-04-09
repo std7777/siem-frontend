@@ -11,25 +11,26 @@
   padding: 20px 24px;
 }
 
-.grid-4 {
+.grid-4,
+.grid-3,
+.grid-2 {
   display: grid;
+  margin-bottom: 16px;
+}
+
+.grid-4 {
   grid-template-columns: repeat(4, 1fr);
   gap: 12px;
-  margin-bottom: 16px;
 }
 
 .grid-3 {
-  display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 16px;
-  margin-bottom: 16px;
 }
 
 .grid-2 {
-  display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 16px;
-  margin-bottom: 16px;
 }
 
 .page-title {

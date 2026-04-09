@@ -1,3 +1,9 @@
+.card,
+.stat {
+  border: 1px solid var(--border);
+  border-radius: var(--r2);
+}
+
 .btn {
   padding: 6px 14px;
   border-radius: var(--r);
@@ -32,8 +38,6 @@
 
 .card {
   background: var(--bg1);
-  border: 1px solid var(--border);
-  border-radius: var(--r2);
   padding: 16px 20px;
 }
 
@@ -52,8 +56,6 @@
 
 .stat {
   background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: var(--r2);
   padding: 14px 18px;
 }
 
@@ -76,28 +78,4 @@
   font-size: 12px;
   color: var(--text3);
   margin-top: 4px;
-}
-
-.filter-bar {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  width: 100%;
-}
-
-.filter-bar input {
-  flex: 1;
-  min-width: 180px;
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  color: var(--text1);
-  border-radius: var(--r);
-  padding: 10px 12px;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  outline: none;
-}
-
-.filter-bar input:focus {
-  border-color: var(--accent);
 }

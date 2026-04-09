@@ -11,7 +11,7 @@ function Topbar({ critCount, push }) {
     <div className="topbar">
       <div className="topbar-left">
         <div className="topbar-brand" onClick={() => navigate("/")}>
-          <div className="brand">SIEM</div>
+          <div className="brand">CRON EYE</div>
         </div>
 
         <div className="topnav">
